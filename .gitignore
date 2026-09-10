@@ -1,0 +1,7 @@
+# Ignorar base de datos H2 local y archivos de datos
+*.mv.db
+*.trace.db
+data/
+Backend-Spring-Boot/data/
+### VS Code ###
+.vscode/
