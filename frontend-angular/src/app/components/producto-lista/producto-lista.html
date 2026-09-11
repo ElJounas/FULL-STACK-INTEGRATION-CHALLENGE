@@ -1,27 +1,42 @@
 <div style="padding: 20px;">
-    <h2>Inventario de Productos</h2>
+  <h2>Registrar Nuevo Producto</h2>
 
-    <table border="1" cellpadding="8" style="border-collapse: collapse; width: 100%;">
-        <thead>
-            <tr style="background-color: #f2f2f2;">
-                <th>ID</th>
-                <th>Nombre</th>
-                <th>Categoría</th>
-                <th>Precio</th>
-                <th>Stock</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor="let prod of productos">
-                <td>{{ prod.id }}</td>
-                <td>{{ prod.nombre }}</td>
-                <td>{{ prod.categoria }}</td>
-                <td>{{ prod.precio ? (prod.precio | currency) : 'N/A' }}</td>
-                <td>{{ prod.stock }}</td>
-                </tr>
-            <tr *ngIf="productos.length === 0">
-                <td colspan="5" style="text-align: center;">No hay productos registrados.</td>
-            </tr>
-        </tbody>
-    </table>
+  <form (ngSubmit)="guardarProducto()" style="margin-bottom: 25px; display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+    <input type="text" placeholder="Nombre" [(ngModel)]="nuevoProducto.nombre" name="nombre" required style="padding: 6px;" />
+    <input type="text" placeholder="Categoría" [(ngModel)]="nuevoProducto.categoria" name="categoria" required style="padding: 6px;" />
+    <input type="number" placeholder="Precio" [(ngModel)]="nuevoProducto.precio" name="precio" required style="padding: 6px;" />
+    <input type="number" placeholder="Stock" [(ngModel)]="nuevoProducto.stock" name="stock" required style="padding: 6px;" />
+    
+    <button type="submit" style="padding: 6px 16px; background-color: #28a745; color: white; border: none; border-radius: 4px; cursor: pointer;">
+      Guardar Producto
+    </button>
+  </form>
+
+  <hr style="margin-bottom: 20px;" />
+
+  <h2>Inventario de Productos</h2>
+
+  <table border="1" cellpadding="8" style="border-collapse: collapse; width: 100%;">
+    <thead>
+      <tr style="background-color: #f2f2f2;">
+        <th>ID</th>
+        <th>Nombre</th>
+        <th>Categoría</th>
+        <th>Precio</th>
+        <th>Stock</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let prod of productos">
+        <td>{{ prod.id }}</td>
+        <td>{{ prod.nombre }}</td>
+        <td>{{ prod.categoria }}</td>
+        <td>{{ prod.precio ? (prod.precio | currency) : 'N/A' }}</td>
+        <td>{{ prod.stock }}</td>
+      </tr>
+      <tr *ngIf="productos.length === 0">
+        <td colspan="5" style="text-align: center;">No hay productos registrados.</td>
+      </tr>
+    </tbody>
+  </table>
 </div>
