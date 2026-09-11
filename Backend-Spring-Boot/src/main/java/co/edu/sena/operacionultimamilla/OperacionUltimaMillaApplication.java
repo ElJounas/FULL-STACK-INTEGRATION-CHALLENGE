@@ -15,12 +15,13 @@ public class OperacionUltimaMillaApplication {
     }
 
     @Bean
-    CommandLineRunner cargarDatosIniciales(ProductoRepository repository) {
+    CommandLineRunner initDatabase(ProductoRepository repository) {
         return args -> {
             if (repository.count() == 0) {
-                repository.save(new Producto(null, "Teclado", "Periféricos", 20));
-                repository.save(new Producto(null, "Mouse", "Periféricos", 15));
-                repository.save(new Producto(null, "Monitor", "Pantallas", 10));
+                // Se agregan los valores respetando el orden: (nombre, categoria, precio, stock)
+                repository.save(new Producto("Teclado Mecánico", "PERIFERICOS", 150000.0, 10));
+                repository.save(new Producto("Mouse Gamer", "PERIFERICOS", 80000.0, 15));
+                repository.save(new Producto("Monitor 24 Pulgadas", "PANTALLAS", 650000.0, 5));
             }
         };
     }
