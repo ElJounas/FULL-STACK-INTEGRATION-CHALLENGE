@@ -1,0 +1,27 @@
+<div style="padding: 20px;">
+    <h2>Inventario de Productos</h2>
+
+    <table border="1" cellpadding="8" style="border-collapse: collapse; width: 100%;">
+        <thead>
+            <tr style="background-color: #f2f2f2;">
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Categoría</th>
+                <th>Precio</th>
+                <th>Stock</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let prod of productos">
+                <td>{{ prod.id }}</td>
+                <td>{{ prod.nombre }}</td>
+                <td>{{ prod.categoria }}</td>
+                <td>{{ prod.precio ? (prod.precio | currency) : 'N/A' }}</td>
+                <td>{{ prod.stock }}</td>
+                </tr>
+            <tr *ngIf="productos.length === 0">
+                <td colspan="5" style="text-align: center;">No hay productos registrados.</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
