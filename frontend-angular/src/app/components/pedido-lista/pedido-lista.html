@@ -1,0 +1,72 @@
+<div style="padding: 20px;">
+  <h2>Crear Nuevo Pedido</h2>
+
+  <form (ngSubmit)="crearPedido()" style="margin-bottom: 25px; display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+    <input type="text" placeholder="Cliente" [(ngModel)]="nuevoCliente" name="cliente" required style="padding: 6px;" />
+    
+    <select [(ngModel)]="productoSeleccionadoId" name="producto" required style="padding: 6px;">
+      <option [ngValue]="null">-- Seleccionar Producto --</option>
+      <option *ngFor="let prod of productos" [value]="prod.id">
+        ID: {{ prod.id }} - {{ prod.nombre }} (Stock: {{ prod.stock }})
+      </option>
+    </select>
+
+    <input type="number" placeholder="Cantidad" [(ngModel)]="cantidad" name="cantidad" min="1" required style="padding: 6px; width: 80px;" />
+
+    <select [(ngModel)]="prioridadSeleccionada" name="prioridad" style="padding: 6px;">
+      <option value="ALTA">Prioridad: ALTA</option>
+      <option value="MEDIA">Prioridad: MEDIA</option>
+      <option value="BAJA">Prioridad: BAJA</option>
+    </select>
+
+    <button type="submit" style="padding: 6px 16px; background-color: #28a745; color: white; border: none; border-radius: 4px; cursor: pointer;">
+      Crear Pedido
+    </button>
+  </form>
+
+  <hr style="margin-bottom: 20px;" />
+
+  <h2>Gestión de Pedidos</h2>
+
+  <table border="1" cellpadding="8" style="border-collapse: collapse; width: 100%;">
+    <thead>
+      <tr style="background-color: #f2f2f2;">
+        <th>ID Pedido</th>
+        <th>Cliente</th>
+        <th>ID Producto</th>
+        <th>Cantidad</th>
+        <th>Prioridad</th>
+        <th>Estado</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let ped of pedidos">
+        <td>{{ ped.id }}</td>
+        <td>{{ ped.cliente }}</td>
+        <td>{{ ped.productoId }}</td>
+        <td>{{ ped.cantidad }}</td>
+        <td>
+          <span [style.color]="ped.prioridad === 'ALTA' ? 'red' : (ped.prioridad === 'MEDIA' ? 'orange' : 'green')">
+            <strong>{{ ped.prioridad }}</strong>
+          </span>
+        </td>
+        <td><strong>{{ ped.estado }}</strong></td>
+        <td style="text-align: center; display: flex; gap: 6px; justify-content: center;">
+          <button (click)="confirmarPedido(ped.id)" style="padding: 4px 10px; background-color: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer;">
+            Confirmar
+          </button>
+          <button (click)="despacharPedido(ped.id)" style="padding: 4px 10px; background-color: #17a2b8; color: white; border: none; border-radius: 4px; cursor: pointer;">
+            Despachar
+          </button>
+          <button (click)="cancelarPedido(ped.id)" style="padding: 4px 10px; background-color: #dc3545; color: white; border: none; border-radius: 4px; cursor: pointer;">
+            Cancelar
+          </button>
+        </td>
+      </tr>
+      <tr *ngIf="pedidos.length === 0">
+        <td colspan="7" style="text-align: center;">No hay pedidos registrados.</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
