@@ -16,7 +16,7 @@ export class ProductoListaComponent implements OnInit {
   private cdr = inject(ChangeDetectorRef);
   
   productos: Producto[] = [];
-  editando: boolean = false; // Estado para saber si creamos o editamos
+  editando: boolean = false;
 
   nuevoProducto: Producto = {
     nombre: '',
@@ -39,9 +39,8 @@ export class ProductoListaComponent implements OnInit {
     });
   }
 
-  // Cargar datos del producto seleccionado en el formulario
   seleccionarParaEditar(prod: Producto): void {
-    this.nuevoProducto = { ...prod }; // Copia de los datos
+    this.nuevoProducto = { ...prod };
     this.editando = true;
   }
 
@@ -61,7 +60,6 @@ export class ProductoListaComponent implements OnInit {
     }
 
     if (this.editando && this.nuevoProducto.id) {
-      // Petición PUT para actualizar
       this.productoService.actualizar(this.nuevoProducto.id, this.nuevoProducto).subscribe({
         next: () => {
           this.cargarProductos();
@@ -70,13 +68,25 @@ export class ProductoListaComponent implements OnInit {
         error: (error) => console.error('Error al actualizar:', error)
       });
     } else {
-      // Petición POST para crear
       this.productoService.crear(this.nuevoProducto).subscribe({
         next: () => {
           this.cargarProductos();
           this.limpiarFormulario();
         },
         error: (error) => console.error('Error al crear:', error)
+      });
+    }
+  }
+
+  // Método de eliminación controlada con confirmación
+  eliminarProducto(id: number | undefined): void {
+    if (!id) return;
+
+    const confirmacion = confirm('¿Estás seguro de que deseas eliminar este producto?');
+    if (confirmacion) {
+      this.productoService.eliminar(id).subscribe({
+        next: () => this.cargarProductos(),
+        error: (error) => console.error('Error al eliminar producto:', error)
       });
     }
   }
