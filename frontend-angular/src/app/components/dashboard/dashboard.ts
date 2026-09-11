@@ -30,17 +30,19 @@ export class DashboardComponent implements OnInit {
   }
 
   cargarMetricas(): void {
-    // 1. Obtener productos actualizados
     this.productoService.listar().subscribe({
       next: (prods: Producto[]) => {
         this.totalProductos = prods.length;
         this.productosStockBajo = prods.filter(p => p.stock <= 5).length;
         this.cdr.detectChanges();
       },
-      error: (err) => console.error('Error al cargar productos:', err)
+      error: (err) => {
+        if (err.status === 0) {
+          alert('No fue posible conectar con el servidor. Verifica que el backend esté disponible.');
+        }
+      }
     });
-
-    // 2. Obtener resumen de pedidos actualizado directamente desde Spring Boot
+  
     this.pedidoService.obtenerResumen().subscribe({
       next: (resumen) => {
         this.totalPedidos = resumen.total;
@@ -49,7 +51,11 @@ export class DashboardComponent implements OnInit {
         this.pedidosUrgentes = resumen.urgentes;
         this.cdr.detectChanges();
       },
-      error: (err) => console.error('Error al obtener resumen:', err)
+      error: (err) => {
+        if (err.status === 0) {
+          console.error('Servidor desconectado.');
+        }
+      }
     });
   }
 }

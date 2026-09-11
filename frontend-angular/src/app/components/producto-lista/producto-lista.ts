@@ -35,7 +35,14 @@ export class ProductoListaComponent implements OnInit {
         this.productos = datos;
         this.cdr.detectChanges();
       },
-      error: (err) => console.error('Error al consultar productos:', err)
+      error: (err) => {
+        console.error('Error al consultar productos:', err);
+        if (err.status === 0) {
+          alert('No fue posible conectar con el servidor. Verifica que el backend esté disponible.');
+        } else {
+          alert('Ocurrió un error al cargar los productos.');
+        }
+      }
     });
   }
 
@@ -88,6 +95,19 @@ export class ProductoListaComponent implements OnInit {
         next: () => this.cargarProductos(),
         error: (error) => console.error('Error al eliminar producto:', error)
       });
+    }
+  }
+
+  // Método para clasificar el estado visual del stock
+  obtenerBadgeStock(stock: number): { texto: string; color: string } {
+    if (stock === 0) {
+      return { texto: 'AGOTADO', color: '#dc3545' };
+    } else if (stock <= 3) {
+      return { texto: 'CRÍTICO', color: '#fd7e14' };
+    } else if (stock <= 6) {
+      return { texto: 'BAJO', color: '#ffc107' };
+    } else {
+      return { texto: 'DISPONIBLE', color: '#28a745' };
     }
   }
 }

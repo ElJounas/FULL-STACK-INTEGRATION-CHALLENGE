@@ -37,7 +37,14 @@ export class PedidoListaComponent implements OnInit {
         this.pedidos = datos;
         this.cdr.detectChanges();
       },
-      error: (err) => console.error('Error al listar pedidos:', err)
+      error: (err) => {
+        console.error('Error al listar pedidos:', err);
+        if (err.status === 0) {
+          alert('No fue posible conectar con el servidor. Verifica que el backend esté disponible.');
+        } else {
+          alert('Ocurrió un error al cargar los pedidos.');
+        }
+      }
     });
   }
 
@@ -73,9 +80,12 @@ export class PedidoListaComponent implements OnInit {
   }
 
   confirmarPedido(id: number | undefined): void {
-    if (!id) return;
+  if (!id) return;
     this.pedidoService.confirmar(id).subscribe({
-      next: () => this.cargarPedidos(),
+      next: () => {
+        this.cargarPedidos();
+        this.cargarProductos(); // Refresca automáticamente el stock de productos
+      },
       error: (err) => alert(err.error?.message || 'No se pudo confirmar el pedido')
     });
   }
@@ -91,7 +101,10 @@ export class PedidoListaComponent implements OnInit {
   despacharPedido(id: number | undefined): void {
     if (!id) return;
     this.pedidoService.despachar(id).subscribe({
-      next: () => this.cargarPedidos(),
+      next: () => {
+        this.cargarPedidos();
+        this.cargarProductos(); // Refresca automáticamente el stock de productos
+      },
       error: (err) => alert(err.error?.message || 'No se pudo despachar el pedido')
     });
   }
