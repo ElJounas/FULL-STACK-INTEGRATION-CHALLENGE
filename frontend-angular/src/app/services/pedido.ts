@@ -27,4 +27,8 @@ export class PedidoService {
   despachar(id: number): Observable<Pedido> {
     return this.http.put<Pedido>(`${this.apiUrl}/${id}/despachar`, {});
   }
+
+  obtenerResumen(): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/resumen`);
+  }
 }

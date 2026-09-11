@@ -1,0 +1,43 @@
+<div style="padding: 20px;">
+    <h2>Dashboard Resumen</h2>
+
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 15px; margin-top: 20px;">
+        
+        <!-- Tarjeta 1: Total Productos -->
+        <div style="background-color: #f8f9fa; border-left: 5px solid #007bff; padding: 15px; border-radius: 6px; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
+            <span style="font-size: 0.9rem; color: #6c757d;">Total de Productos</span>
+            <h3 style="font-size: 1.8rem; margin: 8px 0 0 0; color: #007bff;">{{ totalProductos }}</h3>
+        </div>
+    
+        <!-- Tarjeta 2: Stock Bajo -->
+        <div style="background-color: #f8f9fa; border-left: 5px solid #dc3545; padding: 15px; border-radius: 6px; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
+            <span style="font-size: 0.9rem; color: #6c757d;">Stock Bajo (<= 5)</span>
+            <h3 style="font-size: 1.8rem; margin: 8px 0 0 0; color: #dc3545;">{{ productosStockBajo }}</h3>
+        </div>
+    
+        <!-- Tarjeta 3: Total Pedidos -->
+        <div style="background-color: #f8f9fa; border-left: 5px solid #6c757d; padding: 15px; border-radius: 6px; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
+            <span style="font-size: 0.9rem; color: #6c757d;">Total de Pedidos</span>
+            <h3 style="font-size: 1.8rem; margin: 8px 0 0 0; color: #343a40;">{{ totalPedidos }}</h3>
+        </div>
+    
+        <!-- Tarjeta 4: Pedidos Pendientes -->
+        <div style="background-color: #f8f9fa; border-left: 5px solid #ffc107; padding: 15px; border-radius: 6px; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
+            <span style="font-size: 0.9rem; color: #6c757d;">Pedidos Pendientes</span>
+            <h3 style="font-size: 1.8rem; margin: 8px 0 0 0; color: #d39e00;">{{ pedidosPendientes }}</h3>
+        </div>
+    
+        <!-- Tarjeta 5: Pedidos Urgentes -->
+        <div style="background-color: #f8f9fa; border-left: 5px solid #fd7e14; padding: 15px; border-radius: 6px; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
+            <span style="font-size: 0.9rem; color: #6c757d;">Pedidos Urgentes (ALTA)</span>
+            <h3 style="font-size: 1.8rem; margin: 8px 0 0 0; color: #fd7e14;">{{ pedidosUrgentes }}</h3>
+        </div>
+    
+        <!-- Tarjeta 6: Pedidos Confirmados -->
+        <div style="background-color: #f8f9fa; border-left: 5px solid #28a745; padding: 15px; border-radius: 6px; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
+            <span style="font-size: 0.9rem; color: #6c757d;">Pedidos Confirmados</span>
+            <h3 style="font-size: 1.8rem; margin: 8px 0 0 0; color: #28a745;">{{ pedidosConfirmados }}</h3>
+        </div>
+
+    </div>
+</div>

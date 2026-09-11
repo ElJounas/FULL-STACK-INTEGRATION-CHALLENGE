@@ -40,8 +40,8 @@
         <th>Acciones</th>
       </tr>
     </thead>
-    <tbody>
-      <tr *ngFor="let ped of pedidos">
+    <tbody *ngFor="let ped of pedidos">
+      <tr>
         <td>{{ ped.id }}</td>
         <td>{{ ped.cliente }}</td>
         <td>{{ ped.productoId }}</td>
@@ -52,19 +52,41 @@
           </span>
         </td>
         <td><strong>{{ ped.estado }}</strong></td>
+        
+        <!-- Celdas de acciones sensibles al estado -->
         <td style="text-align: center; display: flex; gap: 6px; justify-content: center;">
-          <button (click)="confirmarPedido(ped.id)" style="padding: 4px 10px; background-color: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer;">
-            Confirmar
-          </button>
-          <button (click)="despacharPedido(ped.id)" style="padding: 4px 10px; background-color: #17a2b8; color: white; border: none; border-radius: 4px; cursor: pointer;">
-            Despachar
-          </button>
-          <button (click)="cancelarPedido(ped.id)" style="padding: 4px 10px; background-color: #dc3545; color: white; border: none; border-radius: 4px; cursor: pointer;">
-            Cancelar
-          </button>
+          
+          <!-- Si está PENDIENTE: Mostrar Confirmar y Cancelar -->
+          <ng-container *ngIf="ped.estado === 'PENDIENTE'">
+            <button (click)="confirmarPedido(ped.id)" style="padding: 4px 10px; background-color: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer;">
+              Confirmar
+            </button>
+            <button (click)="cancelarPedido(ped.id)" style="padding: 4px 10px; background-color: #dc3545; color: white; border: none; border-radius: 4px; cursor: pointer;">
+              Cancelar
+            </button>
+          </ng-container>
+        
+          <!-- Si está CONFIRMADO: Mostrar Despachar y Cancelar -->
+          <ng-container *ngIf="ped.estado === 'CONFIRMADO'">
+            <button (click)="despacharPedido(ped.id)" style="padding: 4px 10px; background-color: #17a2b8; color: white; border: none; border-radius: 4px; cursor: pointer;">
+              Despachar
+            </button>
+            <button (click)="cancelarPedido(ped.id)" style="padding: 4px 10px; background-color: #dc3545; color: white; border: none; border-radius: 4px; cursor: pointer;">
+              Cancelar
+            </button>
+          </ng-container>
+        
+          <!-- Si está DESPACHADO o CANCELADO: Solo texto de lectura -->
+          <span *ngIf="ped.estado === 'DESPACHADO' || ped.estado === 'CANCELADO'" style="color: #6c757d; font-style: italic;">
+            Sin acciones disponibles
+          </span>
+        
         </td>
       </tr>
-      <tr *ngIf="pedidos.length === 0">
+    </tbody>
+    
+    <tbody *ngIf="pedidos.length === 0">
+      <tr>
         <td colspan="7" style="text-align: center;">No hay pedidos registrados.</td>
       </tr>
     </tbody>
